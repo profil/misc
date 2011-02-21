@@ -8,8 +8,8 @@ int main() {
 	int s, c;
 	struct sockaddr_in dest;
 	FILE *fp;
-	char *mess = "NICK aegc\r\nUSER foo 8 * :bar\r\nJOIN #cout.dev\r\n\
-PRIVMSG #cout.dev :profil\r\nPART #cout.dev\r\nQUIT\r\n";
+	char *mess = "NICK aegc\r\nUSER foo 8 * :bar\r\nJOIN #cout.dev\r\n"
+			"PRIVMSG #cout.dev :profil\r\nPART #cout.dev\r\nQUIT\r\n";
 
 
 	if((s = socket(AF_INET, SOCK_STREAM, 0))<0) {
