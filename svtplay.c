@@ -18,18 +18,15 @@
 
 #define MAXLINE 1000
 
-int getline(char s[], FILE *fp, int lim);
-
-char *pattern = "<param name=\"flashvars\" value=\"";
+char *pattern = "rtmp://";
 
 int main(int argc, char *argv[]) {
 	int s;
 	struct sockaddr_in dest;
 	char line[MAXLINE];
 	char *ip = "82.99.28.179";
-	char *file = "/t/102959/pa_sparet";
-
-	FILE *fp;
+/*	char *file = "/t/102959/pa_sparet";*/
+	char *str = "GET /t/102959/pa_sparet HTTP/1.1\nConnection: close\n\n";
 
 /* TODO
 	if(argc < 2) {
@@ -51,24 +48,13 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	fp = fdopen(s, "r+");
-	fprintf(fp, "GET %s HTTP/1.1\n\n", file);
-	while(getline(line, fp, MAXLINE) > 0) {
+	send(s, str, strlen(str),0);
+	while(read(s, line, MAXLINE) > 0) {
 		if(strstr(line, pattern) != NULL) {
 			printf("%s", line);
 		}
 	}
+
 	close(s);
 	return 0;
-}
-
-int getline(char s[], FILE *fp, int lim) {
-	int c, i=0;
-
-	while(--lim > 0 && (c=getc(fp)) != EOF && c != '\n')
-		s[i++] = c;
-	if(c == '\n')
-		s[i++] = c;
-	s[i] = '\0';
-	return i;
 }
