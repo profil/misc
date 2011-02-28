@@ -4,6 +4,8 @@
 **		* Get bitrate from argument.
 **
 **
+** PROOF-OF-CONCEPT
+**
 ** svtplay is a program that lets you extract RTMP URLs from
 ** SVT Play. You can feed this URL to e.g. rtmpdump and extract
 ** the video. Note, --subtitle and --bitrate isn't implemented yet.
@@ -19,7 +21,7 @@
 #define MAXLINE 255
 #define IPADDR "82.99.28.179"
 
-int compare(char string[], char pattern[], char stop);
+int printurl(char string[], char pattern[], char stop);
 
 char *pattern = "rtmp://";
 
@@ -55,9 +57,10 @@ int main(int argc, char *argv[]) {
 	send(s, start, strlen(start),0);
 	send(s, file, strlen(file),0);
 	send(s, stop, strlen(stop),0);
+
 	while(read(s, line, MAXLINE) > 0) {
-		if(compare(line, pattern, ',') > 0) {
-			printf("Found it!\n");
+		if(printurl(line, pattern, ',') > 0) {
+			putchar('\n');
 		}
 	}
 
@@ -65,14 +68,15 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-/* If c[] contains t[] print every char up to char s.
-   If t[] not found, return 0, otherwise return index. */
-int compare(char c[], char t[], char s) {
-/*
-TODO
-- Get things done here?
-- if(c[i] == t[i]) in strlen(t) times start printing up until s appears
-*/
-
-	return 0;
+int printurl(char c[], char t[], char s) {
+	char *i;
+	if((i=strstr(c, t)) !=NULL) {
+		for(;*i!=s && *i != '\0';i++) {
+			putchar(*i);
+		}
+	return 1;
+	}
+	else {
+		return 0;
+	}
 }
