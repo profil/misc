@@ -1,5 +1,8 @@
 /*
-**	TODO:	* Parse output.
+**	TODO:
+**		* Parse output.
+**		* Read 512 bytes, split up on "\r\n" and put into the queue
+**
 **		* Get url from argument.
 **		* Get bitrate from argument.
 **
